@@ -7,7 +7,7 @@ import styled from "styled-components";
 const TitleWeapon = styled.h2`
     text-align: center;
     font-size: 48px;
-    margin: 2rem 0;
+    margin: 3rem 0;
 `
 
 const ListWeapons = styled.ul`

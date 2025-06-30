@@ -13,4 +13,25 @@ type Chroma = {
     fullRender: string;
 }
 
-export type {Skin}
+type Bundle = {
+    uuid: string;
+    displayName: string;
+    displayIcon: string;
+    verticalPromoImage: string;
+}
+
+type Buddy = {
+    uuid: string;
+    displayName: string;
+    displayIcon: string;
+}
+
+type PlayerCard = {
+    uuid: string;
+    displayName: string;
+    largeArt: string;
+    smallArt: string;
+    wideArt: string;
+}
+
+export type {Skin, Bundle, Buddy, PlayerCard}

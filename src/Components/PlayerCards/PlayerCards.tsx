@@ -1,0 +1,73 @@
+import { useEffect, useState } from "react"
+import client from "../../api/api";
+import type { PlayerCard } from "../../types/types";
+import Loading from "../Loading/Loading";
+import styled from "styled-components";
+
+const TitlePlayerCards = styled.h2`
+    font-size: 48px;
+    margin: 3rem 0;
+    text-align: center;
+`
+
+const DivPlayerCards = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+`
+
+const PlayerCardCard = styled.div`
+    width: 20%;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    img {
+        width: 75%;
+        height: 75%;
+    }
+`
+
+interface PlayerCardResponse {
+    status: number;
+    data: PlayerCard[]
+}
+
+const PlayerCards = () => {
+    const [playerCards, setPlayerCards] = useState<PlayerCard[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
+
+    const fetchPlayerCards = async () => {
+        try {
+            const { data } = await client.get<PlayerCardResponse>("/playercards")
+            setPlayerCards(data.data);
+            console.log(data)
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    useEffect(() => {
+        fetchPlayerCards();
+    }, [])
+
+    if (loading) return <Loading />
+
+  return (
+    <>
+    <TitlePlayerCards>Player Cards</TitlePlayerCards>
+    <DivPlayerCards>
+        {playerCards.map(playerCard => (
+            <PlayerCardCard key={playerCard.uuid}>
+            <h3>{playerCard.displayName}</h3>
+            <img src={playerCard.largeArt} />
+            </PlayerCardCard>
+        ))}
+    </DivPlayerCards>
+    </>
+  )
+}
+
+export default PlayerCards
