@@ -14,10 +14,15 @@ const DivBundles = styled.div`
     display:flex;
     flex-wrap: wrap;
     justify-content: center;
+    gap: 1rem;
 `
 
 const BundleCard = styled.div`
     width: 45%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
     img {
         width: 90%;
         height: 90%;
@@ -58,7 +63,7 @@ const Bundles = () => {
                 {bundles.map(bundle => (
                     <BundleCard key={bundle.uuid}>
                         <h3>{bundle.displayName}</h3>
-                        <img src={bundle.displayIcon} />
+                        <img src={bundle.displayIcon} alt={bundle.displayName}/>
                     </BundleCard>
                 ))}
             </DivBundles>

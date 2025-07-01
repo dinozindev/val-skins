@@ -69,7 +69,7 @@ const Buddies = () => {
     {buddies.map(buddy => (
         <BuddyCard key={buddy.uuid}>
             <h3>{buddy.displayName}</h3>
-            <img src={buddy.displayIcon} />
+            <img src={buddy.displayIcon} alt={buddy.displayName}/>
         </BuddyCard>
     ))}
     </DivBuddies>

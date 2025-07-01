@@ -5,6 +5,9 @@ import Skins from "./Components/Skins/Skins"
 import Bundles from "./Components/Bundles/Bundles"
 import Buddies from "./Components/Buddies/Buddies"
 import PlayerCards from "./Components/PlayerCards/PlayerCards"
+import PlayerTitles from "./Components/PlayerTitles/PlayerTitles"
+import Sprays from "./Components/Sprays/Sprays"
+import Footer from "./Components/Footer/Footer"
 
 const App = () => {
   return (
@@ -17,7 +20,10 @@ const App = () => {
         <Route path="/bundles" element={<Bundles />}></Route>
         <Route path="/buddies" element={<Buddies />}></Route>
         <Route path="/player-cards" element={<PlayerCards />}></Route>
+        <Route path="/player-titles" element={<PlayerTitles />}></Route>
+        <Route path="/sprays" element={<Sprays />}></Route>
       </Routes>
+      <Footer />
       </main>
     </>
   )

@@ -34,4 +34,17 @@ type PlayerCard = {
     wideArt: string;
 }
 
-export type {Skin, Bundle, Buddy, PlayerCard}
+type PlayerTitle = {
+    uuid: string;
+    titleText: string;
+}
+
+type Spray = {
+    uuid: string;
+    displayName: string;
+    displayIcon: string;
+    fullIcon: string;
+    fullTransparentIcon: string;
+}
+
+export type {Skin, Bundle, Buddy, PlayerCard, PlayerTitle, Spray}

@@ -62,7 +62,7 @@ const PlayerCards = () => {
         {playerCards.map(playerCard => (
             <PlayerCardCard key={playerCard.uuid}>
             <h3>{playerCard.displayName}</h3>
-            <img src={playerCard.largeArt} />
+            <img src={playerCard.largeArt} alt={playerCard.displayName}/>
             </PlayerCardCard>
         ))}
     </DivPlayerCards>
