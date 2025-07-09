@@ -54,6 +54,12 @@ const SkinCard = styled.div`
   }
 `
 
+const SkinSearchBar = styled.input`
+  display:flex;
+  justify-content: center;
+  color: #000;
+`
+
 interface SkinsResponse {
   status: number,
   data: Skin[]
@@ -63,12 +69,14 @@ interface SkinsResponse {
 const weaponNames = ["Odin", "Ares", "Vandal", "Bulldog", "Phantom", "Judge", "Bucky", "Frenzy", "Classic", "Ghost", "Sheriff", "Shorty", "Operator", "Guardian", "Outlaw", "Marshal", "Spectre", "Stinger", "Melee"]
 
 const Skins = () => {
+
   const [skins, setSkins] = useState<Skin[]>([]);
   const [weapon, setWeapon] = useState<string>("Vandal");
   const [loading, setLoading] = useState<boolean>(true);
+  const [skinSearch, setSkinSearch] = useState<string>("");
 
   // removes "Random Favorite Skin" from showing.
-  const filteredSkins = skins.filter(skin => !skin.displayName.includes("Random Favorite Skin"));
+  const filteredSkins= skins.filter(skin => !skin.displayName.includes("Random Favorite Skin"));
 
   // handler for each weapon button.
   const handleWeaponSelection = (weaponName: string) => {
@@ -79,13 +87,15 @@ const Skins = () => {
   const filteredUserSkins = filteredSkins.filter(skin => {
     const name = skin.displayName.trim().toLowerCase();
 
-    if (weapon === "Melee") {
-      return !weaponNames.some(weaponName =>
-        name.endsWith(weaponName.toLowerCase())
-      );
-    } else {
-      return name.endsWith(weapon.toLowerCase());
-    }
+    const matchesWeapon = weapon === "Melee" 
+    ? !weaponNames.some(weaponName => 
+      name.endsWith(weaponName.toLowerCase())
+    )
+    : name.endsWith(weapon.toLowerCase());
+
+    const matchesSearch = name.includes(skinSearch.trim().toLowerCase());
+
+    return matchesWeapon && matchesSearch;
   });
 
   const fetchSkins = async () => {
@@ -124,6 +134,7 @@ const Skins = () => {
         ))
         }
       </ListWeapons>
+      <SkinSearchBar type="text" onSubmit={() => setSkinSearch}/>
       <DivSkins>
         {filteredUserSkins.map(skin => (
           <SkinCard key={skin.uuid}>

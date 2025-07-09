@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import styled from "styled-components"
-import logo from "../../../public/img/vlrlogo.png"
+import logo from "/img/vlrlogo.png"
 
 const StyledHeader = styled.header`
     width: 100%;
