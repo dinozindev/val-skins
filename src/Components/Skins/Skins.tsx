@@ -56,21 +56,50 @@ const DivSkins = styled.div`
   display:flex;
   flex-wrap: wrap;
   justify-content: center;
+  gap: 1.5rem;
 `
 
 const SkinCard = styled.div`
   width: 30%;
+  height: 250px;
   display:flex;
   flex-direction: column;
   align-items: center;
   background-color: #682A36;
-  margin: 1rem;
   padding: 1rem;
   gap: 1.75rem;
   img {
     width: 75%;
-    height: 75%;
   }
+`
+
+const ChromaButton = styled.button`
+  background-color: #E2263C;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  &:hover {
+    background-color: #FF5062;
+    transition: 0.2s;
+  }
+`
+
+const ChromaDiv = styled.div<{ $chroma: boolean }>`
+  background-color: #682A36;
+  display: ${(props) => (props.$chroma ? 'flex' : 'none')};
+  flex-direction: column;
+  position: relative;
+  gap: 2rem;
+  width: 100%;
+`
+
+const ChromaCard = styled.div`
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  margin: 1.5rem 0 1.5rem 0;
 `
 
 interface SkinsResponse {
@@ -87,13 +116,14 @@ const Skins = () => {
   const [weapon, setWeapon] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
   const [skinSearch, setSkinSearch] = useState<string>("");
+  const [activeSkinChromaId, setActiveSkinChromaId] = useState<string | null>("");
 
   // removes "Random Favorite Skin" from showing.
-  const filteredSkins = skins.filter(skin => !skin.displayName.includes("Random Favorite Skin"));
+  const filteredSkins = skins.filter(skin => !skin.displayName.includes("Random Favorite Skin Standard"));
 
   // handler for each weapon button.
   const handleWeaponSelection = (weaponName: string) => {
-      setWeapon(weaponName);  
+    setWeapon(weaponName);
   };
 
   // filter skins by user filter (Melee is for skins that don't match any of the weapons in the weaponNames Array) and also filters by search bar.
@@ -101,15 +131,24 @@ const Skins = () => {
     const name = skin.displayName.trim().toLowerCase();
 
     const matchesWeapon = weapon === "Melee"
-    ? !weaponNames.some(weaponName => 
-      name.endsWith(weaponName.toLowerCase())
-    )
-    : name.endsWith(weapon.toLowerCase());
+      ? !weaponNames.some(weaponName =>
+        name.endsWith(weaponName.toLowerCase())
+      )
+      : name.endsWith(weapon.toLowerCase());
 
     const matchesSearch = name.includes(skinSearch.trim().toLowerCase());
 
     return matchesWeapon && matchesSearch;
   });
+
+  const showChromas = (uuid: string) => {
+    if (activeSkinChromaId === uuid) {
+      setActiveSkinChromaId(null);
+    }
+    else {
+      setActiveSkinChromaId(uuid);
+    }
+  }
 
   // fetches all the skins from the Valorant API
   const fetchSkins = async () => {
@@ -133,34 +172,56 @@ const Skins = () => {
     <>
       <TitleWeapon>Skins</TitleWeapon>
       <FilterDiv>
-      <ListWeapons>
-        {weaponNames.map(weaponName => weapon === weaponName ? (
-          <li>
-            <ButtonWeapon key={weaponName} onClick={() => handleWeaponSelection(weaponName)} style={{backgroundColor: "#682A36"}}>
-              {weaponName}
-            </ButtonWeapon>
-          </li>
-        ) : (
-          <li>
-            <ButtonWeapon key={weaponName} onClick={() => handleWeaponSelection(weaponName)}>
-              {weaponName}
-            </ButtonWeapon>
-          </li>
-        ))
-        }
-      </ListWeapons>
-      <SkinSearchBar type="text" onChange={(e) => setSkinSearch(e.target.value)} placeholder="Search a skin by name..."/>
+        <ListWeapons>
+          {weaponNames.map(weaponName => weapon === weaponName ? (
+            <li>
+              <ButtonWeapon key={weaponName} onClick={() => handleWeaponSelection(weaponName)} style={{ backgroundColor: "#682A36" }}>
+                {weaponName}
+              </ButtonWeapon>
+            </li>
+          ) : (
+            <li>
+              <ButtonWeapon key={weaponName} onClick={() => handleWeaponSelection(weaponName)}>
+                {weaponName}
+              </ButtonWeapon>
+            </li>
+          ))
+          }
+        </ListWeapons>
+        <SkinSearchBar type="text" onChange={(e) => setSkinSearch(e.target.value)} placeholder="Search a skin by name..." />
       </FilterDiv>
       <DivSkins>
         {filteredUserSkins.map(skin => (
           <SkinCard key={skin.uuid}>
             <h2>{skin.displayName}</h2>
             <img src={skin.chromas[0].fullRender} alt={skin.displayName} />
-            {/* {skin.chromas.map(chroma => (
-        <img src={chroma.fullRender} />
-      ))} */}
+            {skin.chromas.length == 1 ? <></> : <ChromaButton onClick={() => showChromas(skin.uuid)}>Chromas</ChromaButton>}
+            <ChromaDiv $chroma={activeSkinChromaId === skin.uuid}>
+            {skin.chromas.slice(1).map(chroma => chroma.streamedVideo !== null ? (
+              <ChromaCard>
+                {activeSkinChromaId === skin.uuid && (
+                  <>
+                    <p>{chroma.displayName.replace("Level 3", "").replace("Level 4", "").replace("Level 5", "")}</p>
+                    <img src={chroma.fullRender} />
+                    <video width="60%" height="90%" controls >
+                      <source src={chroma.streamedVideo} type="video/mp4" />
+                    </video>
+                  </>
+                )}
+              </ChromaCard>
+            ) : (
+              <ChromaCard>
+                <p>{chroma.displayName.replace("Level 3", "").replace("Level 4", "").replace("Level 5", "")}</p>
+                <img src={chroma.fullRender} />
+              </ChromaCard>
+            )
+            )}
+            </ChromaDiv>
+
           </SkinCard>
+
         ))}
+
       </DivSkins>
     </>
   )

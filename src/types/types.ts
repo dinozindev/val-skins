@@ -11,6 +11,7 @@ type Chroma = {
     uuid: string;
     displayName: string;
     fullRender: string;
+    streamedVideo?: string;
 }
 
 type Bundle = {
