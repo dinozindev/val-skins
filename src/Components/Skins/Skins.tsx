@@ -59,24 +59,38 @@ const DivSkins = styled.div`
   gap: 1.5rem;
 `
 
-const SkinCard = styled.div`
+const SkinCard = styled.div<{ $chroma: boolean, $preview: boolean }>`
   width: 30%;
-  height: 250px;
+  height: 600px;
   display:flex;
   flex-direction: column;
+  justify-content: space-around;
   align-items: center;
-  background-color: #682A36;
+  background-color: ${(props) => {
+    if (props.$chroma) return '#490f1bff';
+    if (props.$preview) return '#490f1bff';
+    return '#682A36';
+  }};
   padding: 1rem;
   gap: 1.75rem;
+  h2 {
+    font-size: 28px;
+  }
   img {
-    width: 75%;
+    width: 90%;
   }
 `
 
-const ChromaButton = styled.button`
+const ButtonDiv = styled.div`
+  display:flex;
+  gap: 1rem;
+  justify-content: center;
+`
+
+const Button = styled.button`
   background-color: #E2263C;
   border: none;
-  padding: 0.5rem;
+  padding: .5rem 1.5rem;
   border-radius: 0.25rem;
   cursor: pointer;
   &:hover {
@@ -86,7 +100,7 @@ const ChromaButton = styled.button`
 `
 
 const ChromaDiv = styled.div<{ $chroma: boolean }>`
-  background-color: #682A36;
+  background-color: ${(props) => (props.$chroma ? '#490f1bff' : '#682A36')};
   display: ${(props) => (props.$chroma ? 'flex' : 'none')};
   flex-direction: column;
   position: relative;
@@ -102,6 +116,17 @@ const ChromaCard = styled.div`
   margin: 1.5rem 0 1.5rem 0;
 `
 
+const PreviewDiv = styled.div<{ $preview: boolean }>`
+  display: ${(props) => (props.$preview ? 'flex' : 'none')};
+  background-color: ${(props) => (props.$preview ? '#490f1bff' : '#682A36')};
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem 0;
+  position: relative;
+  width: 100%;
+`
+
 interface SkinsResponse {
   status: number,
   data: Skin[]
@@ -113,13 +138,14 @@ const weaponNames = ["Odin", "Ares", "Vandal", "Bulldog", "Phantom", "Judge", "B
 const Skins = () => {
 
   const [skins, setSkins] = useState<Skin[]>([]);
-  const [weapon, setWeapon] = useState<string>("");
+  const [weapon, setWeapon] = useState<string>("Vandal");
   const [loading, setLoading] = useState<boolean>(true);
   const [skinSearch, setSkinSearch] = useState<string>("");
   const [activeSkinChromaId, setActiveSkinChromaId] = useState<string | null>("");
+  const [activeSkinPreviewId, setActiveSkinPreviewId] = useState<string | null>("");
 
   // removes "Random Favorite Skin" from showing.
-  const filteredSkins = skins.filter(skin => !skin.displayName.includes("Random Favorite Skin Standard"));
+  const filteredSkins = skins.filter(skin => !skin.displayName.includes("Random Favorite Skin"));
 
   // handler for each weapon button.
   const handleWeaponSelection = (weaponName: string) => {
@@ -146,7 +172,21 @@ const Skins = () => {
       setActiveSkinChromaId(null);
     }
     else {
+      if (activeSkinPreviewId !== null) {
+        setActiveSkinPreviewId(null);
+      }
       setActiveSkinChromaId(uuid);
+    }
+  }
+
+  const showPreview = (uuid: string) => {
+    if (activeSkinPreviewId === uuid) {
+      setActiveSkinPreviewId(null);
+    } else {
+      if (activeSkinChromaId !== null) {
+        setActiveSkinChromaId(null);
+      }
+      setActiveSkinPreviewId(uuid);
     }
   }
 
@@ -192,31 +232,47 @@ const Skins = () => {
       </FilterDiv>
       <DivSkins>
         {filteredUserSkins.map(skin => (
-          <SkinCard key={skin.uuid}>
+          <SkinCard key={skin.uuid} $chroma={activeSkinChromaId === skin.uuid} $preview={activeSkinPreviewId == skin.uuid}>
             <h2>{skin.displayName}</h2>
             <img src={skin.chromas[0].fullRender} alt={skin.displayName} />
-            {skin.chromas.length == 1 ? <></> : <ChromaButton onClick={() => showChromas(skin.uuid)}>Chromas</ChromaButton>}
+            <ButtonDiv>
+              {skin.chromas.length == 1 ? <></> : <Button onClick={() => showChromas(skin.uuid)}>Chromas</Button>}
+              {skin.levels.length == 1 ? <></> : <Button onClick={() => showPreview(skin.uuid)}>Preview</Button>}
+            </ButtonDiv>
             <ChromaDiv $chroma={activeSkinChromaId === skin.uuid}>
-            {skin.chromas.slice(1).map(chroma => chroma.streamedVideo !== null ? (
-              <ChromaCard>
-                {activeSkinChromaId === skin.uuid && (
-                  <>
-                    <p>{chroma.displayName.replace("Level 3", "").replace("Level 4", "").replace("Level 5", "")}</p>
-                    <img src={chroma.fullRender} />
-                    <video width="60%" height="90%" controls >
-                      <source src={chroma.streamedVideo} type="video/mp4" />
-                    </video>
-                  </>
-                )}
-              </ChromaCard>
-            ) : (
-              <ChromaCard>
-                <p>{chroma.displayName.replace("Level 3", "").replace("Level 4", "").replace("Level 5", "")}</p>
-                <img src={chroma.fullRender} />
-              </ChromaCard>
-            )
-            )}
+              {skin.chromas.slice(1).map(chroma => chroma.streamedVideo !== null ? (
+                <ChromaCard>
+                  {activeSkinChromaId === skin.uuid && (
+                    <>
+                      <h3>{chroma.displayName.replace("Level 3", "").replace("Level 4", "").replace("Level 5", "")}</h3>
+                      <img src={chroma.fullRender} />
+                      <video width="60%" height="90%" controls >
+                        <source src={chroma.streamedVideo} type="video/mp4" />
+                      </video>
+                    </>
+                  )}
+                </ChromaCard>
+              ) : (
+                <ChromaCard>
+                  <h3>{chroma.displayName.replace("Level 3", "").replace("Level 4", "").replace("Level 5", "")}</h3>
+                  <img src={chroma.fullRender} />
+                </ChromaCard>
+              )
+              )}
             </ChromaDiv>
+            <PreviewDiv $preview={activeSkinPreviewId === skin.uuid}>
+              {skin.levels.slice(length - 1).map(preview => preview.streamedVideo !== null ? (
+                <>
+                  <h3>Preview</h3>
+                  <video width="60%" height="90%" controls>
+                    <source src={preview.streamedVideo} type="video/mp4" />
+                  </video>
+                </>
+              ) :
+                <></>
+              )
+              }
+            </PreviewDiv>
 
           </SkinCard>
 

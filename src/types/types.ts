@@ -5,12 +5,19 @@ type Skin = {
     contentTierUuid: string;
     chromas: Chroma[];
     displayIcon: string;
+    levels: Level[];
 }
 
 type Chroma = {
     uuid: string;
     displayName: string;
     fullRender: string;
+    streamedVideo?: string;
+}
+
+type Level = {
+    uuid: string;
+    displayName: string;
     streamedVideo?: string;
 }
 
