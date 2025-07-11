@@ -249,7 +249,7 @@ const Skins = () => {
                 <ChromaCard>
                   {activeSkinChromaId === skin.uuid && (
                     <>
-                      <h3>{chroma.displayName.replace("Level 3", "").replace("Level 4", "").replace("Level 5", "")}</h3>
+                      <h3>{chroma.displayName.replace("Level 2", "").replace("Level 3", "").replace("Level 4", "").replace("Level 5", "")}</h3>
                       <img src={chroma.fullRender} />
                       <video width="90%" height="90%" controls >
                         <source src={chroma.streamedVideo} type="video/mp4" />
@@ -259,7 +259,7 @@ const Skins = () => {
                 </ChromaCard>
               ) : (
                 <ChromaCard>
-                  <h3>{chroma.displayName.replace("Level 3", "").replace("Level 4", "").replace("Level 5", "")}</h3>
+                  <h3>{chroma.displayName.replace("Level 2", "").replace("Level 3", "").replace("Level 4", "").replace("Level 5", "")}</h3>
                   <img src={chroma.fullRender} />
                 </ChromaCard>
               )
