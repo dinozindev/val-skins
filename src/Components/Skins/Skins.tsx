@@ -106,6 +106,7 @@ const ChromaDiv = styled.div<{ $chroma: boolean }>`
   position: relative;
   gap: 2rem;
   width: 100%;
+  padding: 1rem;
 `
 
 const ChromaCard = styled.div`
@@ -122,7 +123,7 @@ const PreviewDiv = styled.div<{ $preview: boolean }>`
   flex-direction: column;
   align-items: center;
   gap: 2rem;
-  padding: 2rem 0;
+  padding: 2rem 1rem;
   position: relative;
   width: 100%;
 `
@@ -133,12 +134,12 @@ interface SkinsResponse {
 }
 
 // weapon names for the buttons
-const weaponNames = ["Odin", "Ares", "Vandal", "Bulldog", "Phantom", "Judge", "Bucky", "Frenzy", "Classic", "Ghost", "Sheriff", "Shorty", "Operator", "Guardian", "Outlaw", "Marshal", "Spectre", "Stinger", "Melee"]
+const weaponNames = ["All", "Odin", "Ares", "Vandal", "Bulldog", "Phantom", "Judge", "Bucky", "Frenzy", "Classic", "Ghost", "Sheriff", "Shorty", "Operator", "Guardian", "Outlaw", "Marshal", "Spectre", "Stinger", "Melee"]
 
 const Skins = () => {
 
   const [skins, setSkins] = useState<Skin[]>([]);
-  const [weapon, setWeapon] = useState<string>("Vandal");
+  const [weapon, setWeapon] = useState<string>("All");
   const [loading, setLoading] = useState<boolean>(true);
   const [skinSearch, setSkinSearch] = useState<string>("");
   const [activeSkinChromaId, setActiveSkinChromaId] = useState<string | null>("");
@@ -155,6 +156,10 @@ const Skins = () => {
   // filter skins by user filter (Melee is for skins that don't match any of the weapons in the weaponNames Array) and also filters by search bar.
   const filteredUserSkins = filteredSkins.filter(skin => {
     const name = skin.displayName.trim().toLowerCase();
+
+    if (weapon === "All") {
+      return filteredSkins;
+    }
 
     const matchesWeapon = weapon === "Melee"
       ? !weaponNames.some(weaponName =>
@@ -246,7 +251,7 @@ const Skins = () => {
                     <>
                       <h3>{chroma.displayName.replace("Level 3", "").replace("Level 4", "").replace("Level 5", "")}</h3>
                       <img src={chroma.fullRender} />
-                      <video width="60%" height="90%" controls >
+                      <video width="90%" height="90%" controls >
                         <source src={chroma.streamedVideo} type="video/mp4" />
                       </video>
                     </>
@@ -263,11 +268,15 @@ const Skins = () => {
             <PreviewDiv $preview={activeSkinPreviewId === skin.uuid}>
               {skin.levels.slice(length - 1).map(preview => preview.streamedVideo !== null ? (
                 <>
+                {activeSkinPreviewId === skin.uuid && (
+                   <>
                   <h3>Preview</h3>
-                  <video width="60%" height="90%" controls>
+                  <video width="90%" height="90%" controls>
                     <source src={preview.streamedVideo} type="video/mp4" />
                   </video>
                 </>
+                )} 
+               </>
               ) :
                 <></>
               )
