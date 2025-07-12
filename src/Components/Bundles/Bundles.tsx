@@ -15,6 +15,9 @@ const DivBundles = styled.div`
     flex-wrap: wrap;
     justify-content: center;
     gap: 1rem;
+    h3 {
+        font-size: 24px;
+    }
 `
 
 const BundleCard = styled.div`
@@ -22,6 +25,8 @@ const BundleCard = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: #682A36;
+    padding: 1.25rem 0;
     gap: 1rem;
     img {
         width: 90%;

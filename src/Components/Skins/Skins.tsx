@@ -71,6 +71,7 @@ const SkinCard = styled.div<{ $chroma: boolean, $preview: boolean }>`
     if (props.$preview) return '#490f1bff';
     return '#682A36';
   }};
+  border-radius: 0.5rem;
   padding: 1rem;
   gap: 1.75rem;
   h2 {
