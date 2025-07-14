@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom"
 import styled from "styled-components"
 import logo from "/img/vlrlogo.png"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faBars } from "@fortawesome/free-solid-svg-icons"
+import { useState } from "react"
 
 const StyledHeader = styled.header`
     width: 100%;
@@ -25,6 +28,19 @@ const StyledHeader = styled.header`
       color: lightgrey;
       transition: 0.2s;
     }
+    @media only screen and (max-width: 480px) {
+      justify-content: space-between;
+      a:first-child {
+      h1 {
+        font-size: 36px;
+      }
+    }
+    }
+`
+
+const LogoLink = styled(Link)`
+  width: 40%;
+  margin-left: 1rem;
 `
 
 const Logo = styled.div`
@@ -37,24 +53,64 @@ const Logo = styled.div`
   span {
     color: #FF5062;
   }
+
+  @media only screen and (max-width: 480px) {
+    img {
+      width: 20%;
+    } 
+  }
 `
 
-const StyledNavbar = styled.nav`
+const StyledNavbar = styled.nav<{ $menu : boolean }>`
     display: flex;
     gap: 2rem;
+    @media only screen and (max-width: 480px) {
+      display: ${(props) => (props.$menu == false ? "none" : "flex")};
+      width: 100%;
+      text-align: end;
+      background-color: #0F1923;
+      flex-direction: column;
+      position: absolute;
+      top: 90px;
+      padding: 1rem 0;
+      a {
+        margin: 0 1rem;
+      }
+    }
+`
+
+const StyledHamburger = styled(FontAwesomeIcon)`
+    display: none;
+    font-size: 32px;
+    margin: 1rem;
+    @media only screen and (max-width: 480px) {
+      display: block;
+    }
 `
 
 const Header = () => {
+
+  const [menu, setMenu] = useState<boolean>(false);
+
+  const toggleMenu = () => {
+    if (menu) {
+      setMenu(false);
+    } else {
+      setMenu(true);
+    }
+  }
+
   return (
     <>
       <StyledHeader>
-        <Link to="/">
+        <LogoLink to="/">
         <Logo>
           <img src={logo} alt="valorant logo"/>
           <h1>Val<span>Skins</span></h1>
         </Logo>
-        </Link>
-        <StyledNavbar>
+        </LogoLink>
+        <StyledHamburger icon={faBars} onClick={() => toggleMenu()}/>
+        <StyledNavbar $menu={menu}>
           <Link to="/skins">Skins</Link>
           <Link to="/bundles">Bundles</Link>
           <Link to="/buddies">Buddies</Link>

@@ -16,6 +16,7 @@ const FilterDiv = styled.div`
     align-items: center;
     margin-bottom: 3rem;
     gap: 1.5rem;
+    
 `
 
 const ListWeapons = styled.ul`
@@ -24,9 +25,16 @@ const ListWeapons = styled.ul`
     gap: 0.25rem;
     display:flex;
     flex-wrap: wrap;
-    width: 90%;
+    width:90%;
     justify-content: center;
     margin: 2rem 0;
+    padding: 0;
+    @media only screen and (max-width: 480px) {
+      overflow: scroll;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+
+    }
 `
 
 const ButtonWeapon = styled.button`
@@ -50,6 +58,9 @@ const SkinSearchBar = styled.input`
   outline: none;
   border-radius: 1rem;
   padding: 0.5rem;
+  @media only screen and (max-width: 480px) {
+    width: 75%;
+  }
 `
 
 const DivSkins = styled.div`
@@ -80,6 +91,16 @@ const SkinCard = styled.div<{ $chroma: boolean, $preview: boolean }>`
   img {
     width: 90%;
   }
+
+  @media only screen and (max-width: 480px) {
+    height: 250px;
+    width: 70%;
+    h2 {
+      font-size: 24px;
+    }
+
+  }
+
 `
 
 const ButtonDiv = styled.div`
@@ -240,18 +261,18 @@ const Skins = () => {
         {filteredUserSkins.map(skin => (
           <SkinCard key={skin.uuid} $chroma={activeSkinChromaId === skin.uuid} $preview={activeSkinPreviewId == skin.uuid}>
             <h2>{skin.displayName}</h2>
-            <img src={skin.chromas[0].fullRender} alt={skin.displayName} />
+            <img src={skin.chromas[0].fullRender} alt={skin.displayName} loading="lazy"/>
             <ButtonDiv>
               {skin.chromas.length == 1 ? <></> : <Button onClick={() => showChromas(skin.uuid)}>Chromas</Button>}
               {skin.levels.length == 1 ? <></> : <Button onClick={() => showPreview(skin.uuid)}>Preview</Button>}
             </ButtonDiv>
             <ChromaDiv $chroma={activeSkinChromaId === skin.uuid}>
               {skin.chromas.slice(1).map(chroma => chroma.streamedVideo !== null ? (
-                <ChromaCard>
+                <ChromaCard key={chroma.uuid}>
                   {activeSkinChromaId === skin.uuid && (
                     <>
                       <h3>{chroma.displayName.replace("Level 2", "").replace("Level 3", "").replace("Level 4", "").replace("Level 5", "")}</h3>
-                      <img src={chroma.fullRender} />
+                      <img src={chroma.fullRender} loading="lazy"/>
                       <video width="90%" height="90%" controls >
                         <source src={chroma.streamedVideo} type="video/mp4" />
                       </video>
@@ -259,9 +280,9 @@ const Skins = () => {
                   )}
                 </ChromaCard>
               ) : (
-                <ChromaCard>
+                <ChromaCard key={chroma.uuid}>
                   <h3>{chroma.displayName.replace("Level 2", "").replace("Level 3", "").replace("Level 4", "").replace("Level 5", "")}</h3>
-                  <img src={chroma.fullRender} />
+                  <img src={chroma.fullRender} loading="lazy"/>
                 </ChromaCard>
               )
               )}
