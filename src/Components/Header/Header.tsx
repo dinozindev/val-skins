@@ -28,14 +28,14 @@ const StyledHeader = styled.header`
       color: lightgrey;
       transition: 0.2s;
     }
-    @media only screen and (max-width: 480px) {
+    @media only screen and (max-width: 768px) {
       justify-content: space-between;
       a:first-child {
       h1 {
         font-size: 36px;
       }
     }
-    }
+  }
 `
 
 const LogoLink = styled(Link)`
@@ -54,9 +54,9 @@ const Logo = styled.div`
     color: #FF5062;
   }
 
-  @media only screen and (max-width: 480px) {
+  @media only screen and (max-width: 768px) {
     img {
-      width: 20%;
+      width: 18%;
     } 
   }
 `
@@ -64,7 +64,7 @@ const Logo = styled.div`
 const StyledNavbar = styled.nav<{ $menu : boolean }>`
     display: flex;
     gap: 2rem;
-    @media only screen and (max-width: 480px) {
+    @media only screen and (max-width: 768px) {
       display: ${(props) => (props.$menu == false ? "none" : "flex")};
       width: 100%;
       text-align: end;
@@ -83,7 +83,7 @@ const StyledHamburger = styled(FontAwesomeIcon)`
     display: none;
     font-size: 32px;
     margin: 1rem;
-    @media only screen and (max-width: 480px) {
+    @media only screen and (max-width: 768px) {
       display: block;
     }
 `

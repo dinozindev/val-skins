@@ -58,8 +58,13 @@ const SkinSearchBar = styled.input`
   outline: none;
   border-radius: 1rem;
   padding: 0.5rem;
+
   @media only screen and (max-width: 480px) {
     width: 75%;
+  }
+
+  @media only screen and (max-width: 768px) {
+    width: 60%;
   }
 `
 
@@ -98,9 +103,12 @@ const SkinCard = styled.div<{ $chroma: boolean, $preview: boolean }>`
     h2 {
       font-size: 24px;
     }
-
   }
 
+  @media (min-width: 481px) and (max-width: 768px) {
+    width: 40%;
+    height: 400px;
+  }
 `
 
 const ButtonDiv = styled.div`
