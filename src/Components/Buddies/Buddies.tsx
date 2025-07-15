@@ -24,13 +24,20 @@ const BuddyCard = styled.div`
     display:flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
     padding: 1rem 0;
     gap: 1rem;
     img {
         width: 30%;
     }
     h3 {
-        font-size: 20px;
+        font-size: 16px;
+    }
+
+    @media only screen and (max-width: 768px) {
+        width: 40%;
+        justify-content: space-evenly;
+        height: 120px;
     }
     
 `

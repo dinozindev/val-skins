@@ -21,6 +21,18 @@ const DivPlayerTitles = styled.div`
         padding: 0.5rem 0;
         text-align: center;
     }
+
+    @media only screen and (max-width: 768px) {
+        h3 {
+            width: 90%;
+        }
+    }
+
+    @media (min-width: 769px) and (max-width: 1279px) {
+        h3 {
+            width: 45%;
+        }
+    }
 `
 
 interface PlayerTitlesResponse {

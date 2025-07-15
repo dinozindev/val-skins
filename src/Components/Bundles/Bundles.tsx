@@ -32,6 +32,10 @@ const BundleCard = styled.div`
         width: 90%;
         height: 90%;
     }
+
+    @media only screen and (max-width: 768px) {
+        width: 90%;  
+    }
 `
 
 interface BundleResponse {
@@ -68,7 +72,7 @@ const Bundles = () => {
                 {bundles.map(bundle => (
                     <BundleCard key={bundle.uuid}>
                         <h3>{bundle.displayName}</h3>
-                        <img src={bundle.displayIcon} alt={bundle.displayName}/>
+                        <img src={bundle.displayIcon} alt={bundle.displayName} loading="lazy"/>
                     </BundleCard>
                 ))}
             </DivBundles>

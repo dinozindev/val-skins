@@ -14,6 +14,7 @@ const DivPlayerCards = styled.div`
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    gap: 2rem;
 `
 
 const PlayerCardCard = styled.div`
@@ -21,10 +22,19 @@ const PlayerCardCard = styled.div`
     display:flex;
     flex-direction: column;
     align-items: center;
+    font-size: 14px;
     gap: 1rem;
     img {
         width: 75%;
-        height: 75%;
+        height: 100%;
+    }
+    
+    @media only screen and (max-width: 480px) {
+        width: 90%;
+    }
+
+    @media (min-width: 481px) and (max-width: 768px) {
+        width: 45%;
     }
 `
 

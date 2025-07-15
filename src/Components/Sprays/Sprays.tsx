@@ -25,6 +25,10 @@ const SprayCard = styled.div`
     gap: 1.5rem;
     background-color: #682A36;
     padding: 1rem;
+    
+    @media only screen and (max-width: 768px) {
+      width: 40%;
+    }
 
 `
 
