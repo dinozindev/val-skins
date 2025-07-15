@@ -8,7 +8,7 @@ import { useState } from "react"
 const StyledHeader = styled.header`
     width: 100%;
     background-color: #0F1923;
-    height: 6rem;
+    height: 7rem;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -28,6 +28,7 @@ const StyledHeader = styled.header`
       color: lightgrey;
       transition: 0.2s;
     }
+    
     @media only screen and (max-width: 768px) {
       justify-content: space-between;
       a:first-child {
@@ -36,6 +37,12 @@ const StyledHeader = styled.header`
       }
     }
   }
+
+    @media (min-width: 769px) and (max-width: 1279px) {
+      align-items: center;
+  }
+
+
 `
 
 const LogoLink = styled(Link)`
@@ -59,6 +66,13 @@ const Logo = styled.div`
       width: 18%;
     } 
   }
+
+  @media (min-width: 769px) and (max-width: 1279px) {
+     justify-content: center;
+     img {
+      width: 12%;
+     }
+  }
 `
 
 const StyledNavbar = styled.nav<{ $menu : boolean }>`
@@ -76,6 +90,9 @@ const StyledNavbar = styled.nav<{ $menu : boolean }>`
       a {
         margin: 0 1rem;
       }
+    }
+    @media (min-width: 769px) and (max-width: 1279px) {
+      justify-content: center;
     }
 `
 

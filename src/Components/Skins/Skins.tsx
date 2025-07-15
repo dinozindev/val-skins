@@ -51,7 +51,7 @@ const ButtonWeapon = styled.button`
 
 const SkinSearchBar = styled.input`
   color: #000;
-  width: 25%;
+  width: 50%;
   height: 2rem;
   font-size: 20px;
   border: none;
@@ -63,7 +63,7 @@ const SkinSearchBar = styled.input`
     width: 75%;
   }
 
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 1279px) {
     width: 60%;
   }
 `
@@ -108,6 +108,11 @@ const SkinCard = styled.div<{ $chroma: boolean, $preview: boolean }>`
   @media (min-width: 481px) and (max-width: 768px) {
     width: 40%;
     height: 400px;
+  }
+
+  @media (min-width: 769px) and (max-width: 1279px) {
+    width: 40%;
+    height: 450px;
   }
 `
 
