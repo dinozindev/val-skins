@@ -188,19 +188,17 @@ const Skins = () => {
     setWeapon(weaponName);
   };
 
-  // filter skins by user filter (Melee is for skins that don't match any of the weapons in the weaponNames Array) and also filters by search bar.
+  // filter skins by user filter (Melee is for skins that don't match any of the weapons in the weaponNames Array and All is for all of the skins) and also filters by search bar.
   const filteredUserSkins = filteredSkins.filter(skin => {
     const name = skin.displayName.trim().toLowerCase();
 
-    if (weapon === "All") {
-      return filteredSkins;
-    }
-
-    const matchesWeapon = weapon === "Melee"
-      ? !weaponNames.some(weaponName =>
-        name.endsWith(weaponName.toLowerCase())
-      )
-      : name.endsWith(weapon.toLowerCase());
+    const matchesWeapon = weapon === "All"
+      ? true
+      : weapon === "Melee"
+        ? !weaponNames.some(weaponName =>
+          name.endsWith(weaponName.toLowerCase())
+        )
+        : name.endsWith(weapon.toLowerCase());
 
     const matchesSearch = name.includes(skinSearch.trim().toLowerCase());
 
@@ -274,7 +272,7 @@ const Skins = () => {
         {filteredUserSkins.map(skin => (
           <SkinCard key={skin.uuid} $chroma={activeSkinChromaId === skin.uuid} $preview={activeSkinPreviewId == skin.uuid}>
             <h2>{skin.displayName}</h2>
-            <img src={skin.chromas[0].fullRender} alt={skin.displayName} loading="lazy"/>
+            <img src={skin.chromas[0].fullRender} alt={skin.displayName} loading="lazy" />
             <ButtonDiv>
               {skin.chromas.length == 1 ? <></> : <Button onClick={() => showChromas(skin.uuid)}>Chromas</Button>}
               {skin.levels.length == 1 ? <></> : <Button onClick={() => showPreview(skin.uuid)}>Preview</Button>}
@@ -285,7 +283,7 @@ const Skins = () => {
                   {activeSkinChromaId === skin.uuid && (
                     <>
                       <h3>{chroma.displayName.replace("Level 2", "").replace("Level 3", "").replace("Level 4", "").replace("Level 5", "")}</h3>
-                      <img src={chroma.fullRender} loading="lazy"/>
+                      <img src={chroma.fullRender} loading="lazy" />
                       <video width="90%" height="90%" controls >
                         <source src={chroma.streamedVideo} type="video/mp4" />
                       </video>
@@ -295,7 +293,7 @@ const Skins = () => {
               ) : (
                 <ChromaCard key={chroma.uuid}>
                   <h3>{chroma.displayName.replace("Level 2", "").replace("Level 3", "").replace("Level 4", "").replace("Level 5", "")}</h3>
-                  <img src={chroma.fullRender} loading="lazy"/>
+                  <img src={chroma.fullRender} loading="lazy" />
                 </ChromaCard>
               )
               )}
@@ -303,15 +301,15 @@ const Skins = () => {
             <PreviewDiv $preview={activeSkinPreviewId === skin.uuid}>
               {skin.levels.slice(length - 1).map(preview => preview.streamedVideo !== null ? (
                 <>
-                {activeSkinPreviewId === skin.uuid && (
-                   <>
-                  <h3>Preview</h3>
-                  <video width="90%" height="90%" controls>
-                    <source src={preview.streamedVideo} type="video/mp4" />
-                  </video>
+                  {activeSkinPreviewId === skin.uuid && (
+                    <>
+                      <h3>Preview</h3>
+                      <video width="90%" height="90%" controls>
+                        <source src={preview.streamedVideo} type="video/mp4" />
+                      </video>
+                    </>
+                  )}
                 </>
-                )} 
-               </>
               ) :
                 <></>
               )
