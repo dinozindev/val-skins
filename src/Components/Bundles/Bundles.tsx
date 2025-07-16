@@ -3,6 +3,7 @@ import client from "../../api/api"
 import type { Bundle } from "../../types/types";
 import Loading from "../Loading/Loading";
 import styled from "styled-components";
+import SearchBar from "../SearchBar/SearchBar";
 
 const TitleBundle = styled.h2`
     text-align: center;
@@ -38,6 +39,12 @@ const BundleCard = styled.div`
     }
 `
 
+const SearchBarDiv = styled.div`
+    display:flex;
+    justify-content: center;
+    margin-bottom: 2.5rem;
+`
+
 interface BundleResponse {
     status: number;
     data: Bundle[];
@@ -46,6 +53,15 @@ interface BundleResponse {
 const Bundles = () => {
     const [bundles, setBundles] = useState<Bundle[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+    const [bundleSearch, setBundleSearch] = useState<string>("");
+
+    const filterBundles = bundles.filter(bundle => {
+        const name = bundle.displayName.trim().toLowerCase();
+
+        const matchesSearch = name.includes(bundleSearch.trim().toLowerCase());
+
+        return matchesSearch;
+    })
 
     const fetchBundles = async () => {
         try {
@@ -68,11 +84,14 @@ const Bundles = () => {
     return (
         <>
             <TitleBundle>Bundles</TitleBundle>
+            <SearchBarDiv>
+                <SearchBar type="text" onChange={(e) => setBundleSearch(e.target.value)} placeholder="Search a bundle by name..." />
+            </SearchBarDiv>
             <DivBundles>
-                {bundles.map(bundle => (
+                {filterBundles.map(bundle => (
                     <BundleCard key={bundle.uuid}>
                         <h3>{bundle.displayName}</h3>
-                        <img src={bundle.displayIcon} alt={bundle.displayName} loading="lazy"/>
+                        <img src={bundle.displayIcon} alt={bundle.displayName} loading="lazy" />
                     </BundleCard>
                 ))}
             </DivBundles>

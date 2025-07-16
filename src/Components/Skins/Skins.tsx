@@ -3,6 +3,7 @@ import client from "../../api/api"
 import type { Skin } from "../../types/types";
 import Loading from "../Loading/Loading";
 import styled from "styled-components";
+import SearchBar from "../SearchBar/SearchBar";
 
 const TitleWeapon = styled.h2`
     text-align: center;
@@ -46,25 +47,6 @@ const ButtonWeapon = styled.button`
   &:hover {
     transition: 0.2s;
     background-color: #E2263C;
-  }
-`
-
-const SkinSearchBar = styled.input`
-  color: #000;
-  width: 50%;
-  height: 2rem;
-  font-size: 20px;
-  border: none;
-  outline: none;
-  border-radius: 1rem;
-  padding: 0.5rem;
-
-  @media only screen and (max-width: 480px) {
-    width: 75%;
-  }
-
-  @media only screen and (max-width: 1279px) {
-    width: 60%;
   }
 `
 
@@ -266,7 +248,7 @@ const Skins = () => {
           ))
           }
         </ListWeapons>
-        <SkinSearchBar type="text" onChange={(e) => setSkinSearch(e.target.value)} placeholder="Search a skin by name..." />
+        <SearchBar type="text" onChange={(e) => setSkinSearch(e.target.value)} placeholder="Search a skin by name..." />
       </FilterDiv>
       <DivSkins>
         {filteredUserSkins.map(skin => (
