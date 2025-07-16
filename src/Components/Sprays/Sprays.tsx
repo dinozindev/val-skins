@@ -3,6 +3,7 @@ import client from "../../api/api";
 import Loading from "../Loading/Loading";
 import type { Spray } from "../../types/types";
 import styled from "styled-components";
+import SearchBar from "../SearchBar/SearchBar";
 
 const SprayTitle = styled.h2`
     margin: 3rem 0;
@@ -29,7 +30,12 @@ const SprayCard = styled.div`
     @media only screen and (max-width: 768px) {
       width: 40%;
     }
+`
 
+const SearchBarDiv = styled.div`
+  display:flex;
+  justify-content: center;
+  margin-bottom: 2.5rem;
 `
 
 interface SpraysResponse {
@@ -40,6 +46,15 @@ interface SpraysResponse {
 const Sprays = () => {
     const [sprays, setSprays] = useState<Spray[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+    const [spraySearch, setSpraySearch] = useState<string>("");
+
+    const filteredSprays = sprays.filter(spray => {
+      const name = spray.displayName.trim().toLowerCase();
+
+      const matchesSearch = name.includes(spraySearch.trim().toLowerCase());
+
+      return matchesSearch;
+    })
 
     const fetchSprays = async () => {
         try {
@@ -62,8 +77,11 @@ const Sprays = () => {
   return (
     <>
     <SprayTitle>Sprays</SprayTitle>
+    <SearchBarDiv>
+      <SearchBar type="text" onChange={(e) => setSpraySearch(e.target.value)} placeholder="Search Spray by name..."/>
+    </SearchBarDiv>
     <DivSprays>
-      {sprays.map(spray => (
+      {filteredSprays.map(spray => (
         <SprayCard>
         <h3>{spray.displayName}</h3>
         <img src={spray.displayIcon} alt={spray.displayName}/>

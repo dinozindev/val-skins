@@ -3,6 +3,7 @@ import client from "../../api/api";
 import Loading from "../Loading/Loading";
 import type { Buddy } from "../../types/types";
 import styled from "styled-components";
+import SearchBar from "../SearchBar/SearchBar";
 
 
 const TitleBuddy = styled.h2`
@@ -42,6 +43,12 @@ const BuddyCard = styled.div`
     
 `
 
+const SearchBarDiv = styled.div`
+    display:flex;
+    justify-content: center;
+    margin-bottom: 2.5rem;
+`
+
 interface BuddiesResponse {
     status: number;
     data: Buddy[];
@@ -50,6 +57,15 @@ interface BuddiesResponse {
 const Buddies = () => {
     const [buddies, setBuddies] = useState<Buddy[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+    const [buddySearch, setBuddySearch] = useState<string>("");
+
+    const filteredBuddies = buddies.filter(buddy => {
+        const name = buddy.displayName.trim().toLowerCase();
+
+        const matchesSearch = name.includes(buddySearch.trim().toLowerCase());
+
+        return matchesSearch;
+    })
 
     const fetchBuddies = async () => {
         try {
@@ -69,19 +85,22 @@ const Buddies = () => {
 
     if (loading) return <Loading />
 
-  return (
-    <>
-    <TitleBuddy>Buddies</TitleBuddy>
-    <DivBuddies>
-    {buddies.map(buddy => (
-        <BuddyCard key={buddy.uuid}>
-            <h3>{buddy.displayName}</h3>
-            <img src={buddy.displayIcon} alt={buddy.displayName}/>
-        </BuddyCard>
-    ))}
-    </DivBuddies>
-    </>
-  )
+    return (
+        <>
+            <TitleBuddy>Buddies</TitleBuddy>
+            <SearchBarDiv>
+                <SearchBar type="text" onChange={(e) => setBuddySearch(e.target.value)} placeholder="Search buddy by name..." />
+            </SearchBarDiv>
+            <DivBuddies>
+                {filteredBuddies.map(buddy => (
+                    <BuddyCard key={buddy.uuid}>
+                        <h3>{buddy.displayName}</h3>
+                        <img src={buddy.displayIcon} alt={buddy.displayName} />
+                    </BuddyCard>
+                ))}
+            </DivBuddies>
+        </>
+    )
 }
 
 export default Buddies

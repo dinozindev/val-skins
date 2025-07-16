@@ -55,7 +55,7 @@ const Bundles = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [bundleSearch, setBundleSearch] = useState<string>("");
 
-    const filterBundles = bundles.filter(bundle => {
+    const filteredBundles = bundles.filter(bundle => {
         const name = bundle.displayName.trim().toLowerCase();
 
         const matchesSearch = name.includes(bundleSearch.trim().toLowerCase());
@@ -88,7 +88,7 @@ const Bundles = () => {
                 <SearchBar type="text" onChange={(e) => setBundleSearch(e.target.value)} placeholder="Search a bundle by name..." />
             </SearchBarDiv>
             <DivBundles>
-                {filterBundles.map(bundle => (
+                {filteredBundles.map(bundle => (
                     <BundleCard key={bundle.uuid}>
                         <h3>{bundle.displayName}</h3>
                         <img src={bundle.displayIcon} alt={bundle.displayName} loading="lazy" />

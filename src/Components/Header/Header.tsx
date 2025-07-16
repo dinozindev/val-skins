@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 import styled from "styled-components"
 import logo from "/img/vlrlogo.png"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faBars } from "@fortawesome/free-solid-svg-icons"
+import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons"
 import { useState } from "react"
 
 const StyledHeader = styled.header`
@@ -96,12 +96,21 @@ const StyledNavbar = styled.nav<{ $menu : boolean }>`
     }
 `
 
-const StyledHamburger = styled(FontAwesomeIcon)`
+const StyledHamburger = styled(FontAwesomeIcon)<{$menu : boolean}>`
     display: none;
     font-size: 32px;
     margin: 1rem;
     @media only screen and (max-width: 768px) {
-      display: block;
+      display: ${(props) => (props.$menu ? "none" : "block")};
+    }
+`
+
+const StyledXmark = styled(FontAwesomeIcon)<{$menu : boolean}>`
+    display: none;
+    font-size: 32px;
+    margin: 1rem;
+    @media only screen and (max-width: 768px) {
+      display: ${(props) => (props.$menu ? "block" : "none")};
     }
 `
 
@@ -126,7 +135,8 @@ const Header = () => {
           <h1>Val<span>Skins</span></h1>
         </Logo>
         </LogoLink>
-        <StyledHamburger icon={faBars} onClick={() => toggleMenu()}/>
+        <StyledHamburger $menu={menu} icon={faBars} onClick={() => toggleMenu()}/>
+        <StyledXmark $menu={menu} icon={faXmark} onClick={() => toggleMenu()}/>
         <StyledNavbar $menu={menu}>
           <Link to="/skins">Skins</Link>
           <Link to="/bundles">Bundles</Link>

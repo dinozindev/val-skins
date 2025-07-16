@@ -3,6 +3,7 @@ import client from "../../api/api";
 import type { PlayerCard } from "../../types/types";
 import Loading from "../Loading/Loading";
 import styled from "styled-components";
+import SearchBar from "../SearchBar/SearchBar";
 
 const TitlePlayerCards = styled.h2`
     font-size: 48px;
@@ -38,6 +39,12 @@ const PlayerCardCard = styled.div`
     }
 `
 
+const SearchBarDiv = styled.div`
+    display:flex;
+    justify-content: center;
+    margin-bottom: 2.5rem;
+`
+
 interface PlayerCardResponse {
     status: number;
     data: PlayerCard[]
@@ -46,6 +53,15 @@ interface PlayerCardResponse {
 const PlayerCards = () => {
     const [playerCards, setPlayerCards] = useState<PlayerCard[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+    const [cardSearch, setCardSearch] = useState<string>("");
+
+    const filteredCards = playerCards.filter(card => {
+        const name = card.displayName.trim().toLowerCase();
+
+        const matchesSearch = name.includes(cardSearch.trim().toLowerCase());
+
+        return matchesSearch;
+    });
 
     const fetchPlayerCards = async () => {
         try {
@@ -68,8 +84,11 @@ const PlayerCards = () => {
   return (
     <>
     <TitlePlayerCards>Player Cards</TitlePlayerCards>
+    <SearchBarDiv>
+        <SearchBar type="text" onChange={(e) => setCardSearch(e.target.value)} placeholder="Search Player Card by name..."/>
+    </SearchBarDiv>
     <DivPlayerCards>
-        {playerCards.map(playerCard => (
+        {filteredCards.map(playerCard => (
             <PlayerCardCard key={playerCard.uuid}>
             <h3>{playerCard.displayName}</h3>
             <img src={playerCard.largeArt} alt={playerCard.displayName}/>
