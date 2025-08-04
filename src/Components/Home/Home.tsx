@@ -59,14 +59,12 @@ const HomeDiv = styled.div`
 
 const Home = () => {
   return (
-    <>
     <HomeMain>
-       <HomeDiv>
-          <h2>Welcome to Val<b>Skins</b>!</h2>
-          <Link to="/skins">Check out skins</Link>
-        </HomeDiv> 
+      <HomeDiv>
+        <h2>Welcome to Val<b>Skins</b>!</h2>
+        <Link to="/skins">Check out skins</Link>
+      </HomeDiv>
     </HomeMain>
-    </>
   )
 }
 

@@ -67,7 +67,7 @@ const PlayerTitles = () => {
     <PlayerTitlesTitle>Player Titles</PlayerTitlesTitle>
     <DivPlayerTitles>
         {playerTitles.map(playerTitle => (
-            <h3>{playerTitle.titleText}</h3>
+            <h3 key={playerTitle.uuid}>{playerTitle.titleText}</h3>
         ))}
     </DivPlayerTitles>
     </>

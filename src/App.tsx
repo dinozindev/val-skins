@@ -11,7 +11,6 @@ import Footer from "./Components/Footer/Footer"
 
 const App = () => {
   return (
-    <>
     <main id="wrapper">
       <Header />
       <Routes>
@@ -24,8 +23,7 @@ const App = () => {
         <Route path="/sprays" element={<Sprays />}></Route>
       </Routes>
       <Footer />
-      </main>
-    </>
+    </main>
   )
 }
 

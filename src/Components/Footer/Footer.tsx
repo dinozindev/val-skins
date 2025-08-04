@@ -12,11 +12,9 @@ const StyledFooter = styled.footer`
 
 const Footer = () => {
   return (
-    <>
     <StyledFooter>
         <h2>Developed by dinozindev</h2>
     </StyledFooter>
-    </>
   )
 }
 

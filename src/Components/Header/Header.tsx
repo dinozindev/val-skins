@@ -75,11 +75,11 @@ const Logo = styled.div`
   }
 `
 
-const StyledNavbar = styled.nav<{ $menu : boolean }>`
+const StyledNavbar = styled.nav<{ $menu: boolean }>`
     display: flex;
     gap: 2rem;
     @media only screen and (max-width: 768px) {
-      display: ${(props) => (props.$menu == false ? "none" : "flex")};
+      display: ${(props) => (props.$menu ? "flex" : "none")};
       width: 100%;
       text-align: end;
       background-color: #0F1923;
@@ -96,7 +96,7 @@ const StyledNavbar = styled.nav<{ $menu : boolean }>`
     }
 `
 
-const StyledHamburger = styled(FontAwesomeIcon)<{$menu : boolean}>`
+const StyledHamburger = styled(FontAwesomeIcon) <{ $menu: boolean }>`
     display: none;
     font-size: 32px;
     margin: 1rem;
@@ -105,7 +105,7 @@ const StyledHamburger = styled(FontAwesomeIcon)<{$menu : boolean}>`
     }
 `
 
-const StyledXmark = styled(FontAwesomeIcon)<{$menu : boolean}>`
+const StyledXmark = styled(FontAwesomeIcon) <{ $menu: boolean }>`
     display: none;
     font-size: 32px;
     margin: 1rem;
@@ -127,26 +127,24 @@ const Header = () => {
   }
 
   return (
-    <>
-      <StyledHeader>
-        <LogoLink to="/">
+    <StyledHeader>
+      <LogoLink to="/">
         <Logo>
-          <img src={logo} alt="valorant logo"/>
+          <img src={logo} alt="valorant logo" />
           <h1>Val<span>Skins</span></h1>
         </Logo>
-        </LogoLink>
-        <StyledHamburger $menu={menu} icon={faBars} onClick={() => toggleMenu()}/>
-        <StyledXmark $menu={menu} icon={faXmark} onClick={() => toggleMenu()}/>
-        <StyledNavbar $menu={menu}>
-          <Link to="/skins">Skins</Link>
-          <Link to="/bundles">Bundles</Link>
-          <Link to="/buddies">Buddies</Link>
-          <Link to="/player-cards">Player Cards</Link>
-          <Link to="/player-titles">Player Titles</Link>
-          <Link to="/sprays">Sprays</Link>
-        </StyledNavbar>
-      </StyledHeader>
-    </>
+      </LogoLink>
+      <StyledHamburger $menu={menu} icon={faBars} onClick={() => toggleMenu()} />
+      <StyledXmark $menu={menu} icon={faXmark} onClick={() => toggleMenu()} />
+      <StyledNavbar $menu={menu}>
+        <Link to="/skins">Skins</Link>
+        <Link to="/bundles">Bundles</Link>
+        <Link to="/buddies">Buddies</Link>
+        <Link to="/player-cards">Player Cards</Link>
+        <Link to="/player-titles">Player Titles</Link>
+        <Link to="/sprays">Sprays</Link>
+      </StyledNavbar>
+    </StyledHeader>
   )
 }
 

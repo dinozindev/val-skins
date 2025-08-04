@@ -12,11 +12,9 @@ const LoadingDiv = styled.div`
 
 const Loading = () => {
     return (
-        <>
         <LoadingDiv>
             <ThreeDot color="#FF5062" size="large" text="Fetching..." textColor="" />
         </LoadingDiv>
-        </>
     )
 }
 

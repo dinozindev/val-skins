@@ -82,7 +82,7 @@ const Sprays = () => {
     </SearchBarDiv>
     <DivSprays>
       {filteredSprays.map(spray => (
-        <SprayCard>
+        <SprayCard key={spray.uuid}>
         <h3>{spray.displayName}</h3>
         <img src={spray.displayIcon} alt={spray.displayName}/>
         </SprayCard>

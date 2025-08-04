@@ -174,14 +174,10 @@ const Skins = () => {
   const filteredUserSkins = filteredSkins.filter(skin => {
     const name = skin.displayName.trim().toLowerCase();
 
-    const matchesWeapon = weapon === "All"
-      ? true
-      : weapon === "Melee"
-        ? !weaponNames.some(weaponName =>
-          name.endsWith(weaponName.toLowerCase())
-        )
-        : name.endsWith(weapon.toLowerCase());
+    const isMelee = weapon === "Melee" ? !weaponNames.some(weaponName => name.endsWith(weaponName.toLowerCase())) : name.endsWith(weapon.toLowerCase());
 
+    const matchesWeapon = weapon === "All" ? true : isMelee;
+    
     const matchesSearch = name.includes(skinSearch.trim().toLowerCase());
 
     return matchesWeapon && matchesSearch;
@@ -234,14 +230,14 @@ const Skins = () => {
       <FilterDiv>
         <ListWeapons>
           {weaponNames.map(weaponName => weapon === weaponName ? (
-            <li>
-              <ButtonWeapon key={weaponName} onClick={() => handleWeaponSelection(weaponName)} style={{ backgroundColor: "#682A36" }}>
+            <li key={weaponName}>
+              <ButtonWeapon onClick={() => handleWeaponSelection(weaponName)} style={{ backgroundColor: "#682A36" }}>
                 {weaponName}
               </ButtonWeapon>
             </li>
           ) : (
-            <li>
-              <ButtonWeapon key={weaponName} onClick={() => handleWeaponSelection(weaponName)}>
+            <li key={weaponName}>
+              <ButtonWeapon onClick={() => handleWeaponSelection(weaponName)}>
                 {weaponName}
               </ButtonWeapon>
             </li>
