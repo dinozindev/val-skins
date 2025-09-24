@@ -59,7 +59,7 @@ const DivSkins = styled.div`
 
 const SkinCard = styled.div<{ $chroma: boolean, $preview: boolean }>`
   width: 30%;
-  height: 600px;
+  height: 800px;
   display:flex;
   flex-direction: column;
   justify-content: space-around;
@@ -102,6 +102,7 @@ const ButtonDiv = styled.div`
   display:flex;
   gap: 1rem;
   justify-content: center;
+  width: 100%;
 `
 
 const Button = styled.button`
@@ -113,6 +114,10 @@ const Button = styled.button`
   &:hover {
     background-color: #FF5062;
     transition: 0.2s;
+  }
+  @media (min-width: 1280px) {
+    width: 12rem;
+    height: 3rem;
   }
 `
 
@@ -143,6 +148,7 @@ const PreviewDiv = styled.div<{ $preview: boolean }>`
   padding: 2rem 1rem;
   position: relative;
   width: 100%;
+  border-radius: 0 0 0.5rem 0.5rem
 `
 
 interface SkinsResponse {
