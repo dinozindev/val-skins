@@ -36,9 +36,9 @@ const BuddyCard = styled.div`
     }
 
     @media only screen and (max-width: 768px) {
-        width: 40%;
+        width: 80%;
         justify-content: space-evenly;
-        height: 120px;
+        height: 180px;
     }
     
 `
