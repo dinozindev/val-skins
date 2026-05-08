@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
 import client from "../../api/api";
 import type { PlayerCard } from "../../types/types";
-import Loading from "../Loading/Loading";
+import Loading from "../../Components/Loading/Loading";
 import styled from "styled-components";
-import SearchBar from "../SearchBar/SearchBar";
+import SearchBar from "../../Components/SearchBar/SearchBar";
 
 const TitlePlayerCards = styled.h2`
     font-size: 48px;

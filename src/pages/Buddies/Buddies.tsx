@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
 import client from "../../api/api";
-import Loading from "../Loading/Loading";
+import Loading from "../../Components/Loading/Loading";
 import type { Buddy } from "../../types/types";
 import styled from "styled-components";
-import SearchBar from "../SearchBar/SearchBar";
+import SearchBar from "../../Components/SearchBar/SearchBar";
 
 
 const TitleBuddy = styled.h2`

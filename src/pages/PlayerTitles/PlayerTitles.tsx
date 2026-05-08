@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import client from "../../api/api";
-import Loading from "../Loading/Loading";
+import Loading from "../../Components/Loading/Loading";
 import type { PlayerTitle } from "../../types/types";
 import styled from "styled-components";
 
