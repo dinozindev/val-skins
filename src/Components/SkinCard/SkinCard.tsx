@@ -96,6 +96,22 @@ const PreviewDiv = styled.div<{ $preview: boolean }>`
   border-radius: 0 0 0.5rem 0.5rem
 `
 
+const InfoDiv = styled.div`
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 50;
+`
+
+const BlurryDiv = styled.div`
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+`
+
 type SkinCardProps = {
     skin: Skin;
 }
@@ -104,6 +120,7 @@ const SkinCard = ({ skin }: SkinCardProps) => {
 
     const [activeSkinChromaId, setActiveSkinChromaId] = useState<string | null>("");
     const [activeSkinPreviewId, setActiveSkinPreviewId] = useState<string | null>("");
+    const [showInfo, setShowInfo] = useState<boolean>(false);
 
     const showChromas = (uuid: string) => {
         if (activeSkinChromaId === uuid) {
@@ -130,11 +147,17 @@ const SkinCard = ({ skin }: SkinCardProps) => {
 
     return (
         <SkinCardDiv key={skin.uuid} $chroma={activeSkinChromaId === skin.uuid} $preview={activeSkinPreviewId == skin.uuid}>
+            {showInfo && (
+                <InfoDiv>
+                    <BlurryDiv onClick={() => setShowInfo(false)}/>
+                </InfoDiv>
+            )}
             <h2>{skin.displayName}</h2>
             <img src={skin.chromas[0].fullRender} alt={skin.displayName} loading="lazy" />
             <ButtonDiv>
                 {skin.chromas.length == 1 ? <></> : <Button onClick={() => showChromas(skin.uuid)}>Chromas</Button>}
                 {skin.levels.length == 1 ? <></> : <Button onClick={() => showPreview(skin.uuid)}>Preview</Button>}
+                <Button onClick={() => setShowInfo(true)}></Button>
             </ButtonDiv>
             <ChromaDiv $chroma={activeSkinChromaId === skin.uuid}>
                 {skin.chromas.slice(1).map(chroma => chroma.streamedVideo !== null ? (
