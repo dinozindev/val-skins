@@ -8,6 +8,7 @@ import PlayerCards from "./pages/PlayerCards/PlayerCards"
 import PlayerTitles from "./pages/PlayerTitles/PlayerTitles"
 import Sprays from "./pages/Sprays/Sprays"
 import Footer from "./Components/Footer/Footer"
+import SkinDetails from "./pages/SkinDetails/SkinDetails"
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="/skins" element={<Skins />}></Route>
+        <Route path="/skins/:id" element={<SkinDetails />}></Route>
         <Route path="/bundles" element={<Bundles />}></Route>
         <Route path="/buddies" element={<Buddies />}></Route>
         <Route path="/player-cards" element={<PlayerCards />}></Route>

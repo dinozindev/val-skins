@@ -72,7 +72,7 @@ const Skins = () => {
   const [weapon, setWeapon] = useState<string>("All");
   const [loading, setLoading] = useState<boolean>(true);
   const [skinSearch, setSkinSearch] = useState<string>("");
-  
+
   // removes "Random Favorite Skin" from showing.
   const filteredSkins = skins.filter(skin => !skin.displayName.includes("Random Favorite Skin"));
 
@@ -88,7 +88,7 @@ const Skins = () => {
     const isMelee = weapon === "Melee" ? !weaponNames.some(weaponName => name.endsWith(weaponName.toLowerCase())) : name.endsWith(weapon.toLowerCase());
 
     const matchesWeapon = weapon === "All" ? true : isMelee;
-    
+
     const matchesSearch = name.includes(skinSearch.trim().toLowerCase());
 
     return matchesWeapon && matchesSearch;
