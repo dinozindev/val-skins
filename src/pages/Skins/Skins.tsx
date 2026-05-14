@@ -55,6 +55,7 @@ const DivSkins = styled.div`
   display:flex;
   flex-wrap: wrap;
   justify-content: center;
+  padding: 0 5rem;
   gap: 1.5rem;
 `
 
@@ -64,7 +65,7 @@ interface SkinsResponse {
 }
 
 // weapon names for the buttons
-const weaponNames = ["All", "Odin", "Ares", "Vandal", "Bulldog", "Phantom", "Judge", "Bucky", "Frenzy", "Classic", "Ghost", "Sheriff", "Shorty", "Operator", "Guardian", "Outlaw", "Marshal", "Spectre", "Stinger", "Melee"]
+const weaponNames = ["All", "Odin", "Ares", "Vandal", "Bulldog", "Phantom", "Judge", "Bucky", "Frenzy", "Classic", "Ghost", "Sheriff", "Shorty", "Operator", "Guardian", "Outlaw", "Marshal", "Spectre", "Stinger","Bandit", "Melee"]
 
 const Skins = () => {
 
