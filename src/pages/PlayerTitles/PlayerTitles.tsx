@@ -20,6 +20,7 @@ const DivPlayerTitles = styled.div`
         background-color: #682A36;
         padding: 0.5rem 0;
         text-align: center;
+        border-radius: 0.25rem;
     }
 
     @media only screen and (max-width: 768px) {

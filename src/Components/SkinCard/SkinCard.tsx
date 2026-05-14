@@ -13,6 +13,12 @@ const SkinCardDiv = styled.div`
   border-radius: 0.5rem;
   padding: 1rem;
   gap: 1.75rem;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateY(-10px);
+  }
+
   h2 {
     font-size: 28px;
   }

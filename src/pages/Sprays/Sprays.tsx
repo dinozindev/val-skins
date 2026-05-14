@@ -26,6 +26,12 @@ const SprayCard = styled.div`
     gap: 1.5rem;
     background-color: #682A36;
     padding: 1rem;
+    transition: transform 0.3s ease;
+    border-radius: 1rem;
+
+    &:hover {
+      transform: translateY(-10px);
+    }
     
     @media only screen and (max-width: 768px) {
       width: 40%;
@@ -39,55 +45,55 @@ const SearchBarDiv = styled.div`
 `
 
 interface SpraysResponse {
-    status: number;
-    data: Spray[];
+  status: number;
+  data: Spray[];
 }
 
 const Sprays = () => {
-    const [sprays, setSprays] = useState<Spray[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [spraySearch, setSpraySearch] = useState<string>("");
+  const [sprays, setSprays] = useState<Spray[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [spraySearch, setSpraySearch] = useState<string>("");
 
-    const filteredSprays = sprays.filter(spray => {
-      const name = spray.displayName.trim().toLowerCase();
+  const filteredSprays = sprays.filter(spray => {
+    const name = spray.displayName.trim().toLowerCase();
 
-      const matchesSearch = name.includes(spraySearch.trim().toLowerCase());
+    const matchesSearch = name.includes(spraySearch.trim().toLowerCase());
 
-      return matchesSearch;
-    })
+    return matchesSearch;
+  })
 
-    const fetchSprays = async () => {
-        try {
-          const { data } = await client.get<SpraysResponse>("/sprays");
-          setSprays(data.data);
-          console.log(data);
-        } catch (error) {
-          console.log(error)
-        } finally {
-          setLoading(false);
-        }
+  const fetchSprays = async () => {
+    try {
+      const { data } = await client.get<SpraysResponse>("/sprays");
+      setSprays(data.data);
+      console.log(data);
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setLoading(false);
     }
+  }
 
-    useEffect(() => {
-      fetchSprays();
-    }, [])
+  useEffect(() => {
+    fetchSprays();
+  }, [])
 
-    if (loading) return <Loading />
- 
+  if (loading) return <Loading />
+
   return (
     <>
-    <SprayTitle>Sprays</SprayTitle>
-    <SearchBarDiv>
-      <SearchBar type="text" onChange={(e) => setSpraySearch(e.target.value)} placeholder="Search Spray by name..."/>
-    </SearchBarDiv>
-    <DivSprays>
-      {filteredSprays.map(spray => (
-        <SprayCard key={spray.uuid}>
-        <h3>{spray.displayName}</h3>
-        <img src={spray.displayIcon} alt={spray.displayName}/>
-        </SprayCard>
-      ))}
-    </DivSprays>
+      <SprayTitle>Sprays</SprayTitle>
+      <SearchBarDiv>
+        <SearchBar type="text" onChange={(e) => setSpraySearch(e.target.value)} placeholder="Search Spray by name..." />
+      </SearchBarDiv>
+      <DivSprays>
+        {filteredSprays.map(spray => (
+          <SprayCard key={spray.uuid}>
+            <h3>{spray.displayName}</h3>
+            <img src={spray.displayIcon} alt={spray.displayName} />
+          </SprayCard>
+        ))}
+      </DivSprays>
     </>
   )
 }
