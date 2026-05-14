@@ -25,7 +25,7 @@ const StyledHeader = styled.header`
       color: #fff;
     } 
     a:hover {
-      color: lightgrey;
+      color: #E2263C;
       transition: 0.2s;
     }
     

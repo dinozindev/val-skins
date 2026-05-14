@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import client from "../../api/api"
 import type { Bundle } from "../../types/types";
-import Loading from "../Loading/Loading";
+import Loading from "../../Components/Loading/Loading";
 import styled from "styled-components";
-import SearchBar from "../SearchBar/SearchBar";
+import SearchBar from "../../Components/SearchBar/SearchBar";
 
 const TitleBundle = styled.h2`
     text-align: center;
@@ -15,6 +15,7 @@ const DivBundles = styled.div`
     display:flex;
     flex-wrap: wrap;
     justify-content: center;
+    margin-top: 3rem;
     gap: 1rem;
     h3 {
         font-size: 24px;
@@ -28,10 +29,18 @@ const BundleCard = styled.div`
     align-items: center;
     background-color: #682A36;
     padding: 1.25rem 0;
+    border-radius: 1rem;
     gap: 1rem;
+    transition: transform 0.3s ease;
+
+    &:hover {
+        transform: translateY(-10px);
+    }
+
     img {
         width: 90%;
         height: 90%;
+        border-radius: 1rem;
     }
 
     @media only screen and (max-width: 768px) {

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
 import client from "../../api/api";
-import Loading from "../Loading/Loading";
+import Loading from "../../Components/Loading/Loading";
 import type { Buddy } from "../../types/types";
 import styled from "styled-components";
-import SearchBar from "../SearchBar/SearchBar";
+import SearchBar from "../../Components/SearchBar/SearchBar";
 
 
 const TitleBuddy = styled.h2`
@@ -28,6 +28,12 @@ const BuddyCard = styled.div`
     text-align: center;
     padding: 1rem 0;
     gap: 1rem;
+    border-radius: 1rem;
+    transition: transform 0.3s ease;
+    &:hover {
+        transform: translateY(-10px);
+    }
+
     img {
         width: 30%;
     }
